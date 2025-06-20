@@ -3,6 +3,7 @@ import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import Navbar from "./components/Navbar";
 import Footer from "./components/Footer";
 import Home from "./pages/Home";
+import BiayaT from "./pages/BiayaT";
 
 function App() {
   return (
@@ -12,6 +13,7 @@ function App() {
         <div className="flex-grow">
           <Routes>
             <Route path="/" element={<Home />} />
+            <Route path="/BiayaT" element={<BiayaT />} />
           </Routes>
         </div>
         <Footer />

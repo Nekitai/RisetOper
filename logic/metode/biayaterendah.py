@@ -1,4 +1,5 @@
 import copy
+from metode.hitung_biaya import hitung_total_biaya
 
 def biaya_terendah(cost_matrix, supply, demand):
     m = len(supply)
@@ -39,9 +40,3 @@ def biaya_terendah(cost_matrix, supply, demand):
         "total_cost": hitung_total_biaya(allocation, cost_matrix)
     }
 
-def hitung_total_biaya(allocation, cost_matrix):
-    total = 0
-    for i in range(len(allocation)):
-        for j in range(len(allocation[0])):
-            total += allocation[i][j] * cost_matrix[i][j]
-    return total

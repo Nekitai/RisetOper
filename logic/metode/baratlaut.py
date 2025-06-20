@@ -1,23 +1,35 @@
+from metode.hitung_biaya import hitung_total_biaya
 def barat_laut(cost_matrix, supply, demand):
-    m = len(supply)
-    n = len(demand)
+    # Validasi input awal
+    if not cost_matrix or not supply or not demand:
+        return {
+            "allocation": [],
+            "total_cost": 0
+        }
 
+    m = len(supply)     # jumlah baris
+    n = len(demand)     # jumlah kolom
+
+    # Salin list agar tidak mengubah data asli
     supply = supply[:]
     demand = demand[:]
+
+    # Inisialisasi matriks alokasi dengan nol
     allocation = [[0 for _ in range(n)] for _ in range(m)]
 
     i = 0
     j = 0
 
+    # Algoritma Barat Laut
     while i < m and j < n:
         alloc = min(supply[i], demand[j])
         allocation[i][j] = alloc
         supply[i] -= alloc
         demand[j] -= alloc
 
-        if supply[i] == 0:
+        if supply[i] == 0 and i < m:
             i += 1
-        elif demand[j] == 0:
+        elif demand[j] == 0 and j < n:
             j += 1
 
     return {
@@ -25,9 +37,6 @@ def barat_laut(cost_matrix, supply, demand):
         "total_cost": hitung_total_biaya(allocation, cost_matrix)
     }
 
-def hitung_total_biaya(allocation, cost_matrix):
-    total = 0
-    for i in range(len(allocation)):
-        for j in range(len(allocation[0])):
-            total += allocation[i][j] * cost_matrix[i][j]
-    return total
+
+
+
