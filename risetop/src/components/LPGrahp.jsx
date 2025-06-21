@@ -9,15 +9,16 @@ function LPGraph({ constraints = [], objectiveLine = [], solutionPoint = null, x
   }
 
   const constraintLines = constraints.map((line, index) => ({
-    label: `Titik ${index + 1}`,
+    label: `Kendala ${index + 1}`,
     data: line,
     borderColor: "red",
     borderWidth: 1,
     showLine: true,
     fill: false,
+    pointRadius: 0,
+    pointHoverRadius: 5,
   }));
 
-  
 
   const solution = {
     label: "Optimal Solution",

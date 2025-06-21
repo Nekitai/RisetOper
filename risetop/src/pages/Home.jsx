@@ -1,4 +1,5 @@
 import React from "react";
+import { Link } from "react-router-dom";
 
 function Home() {
   const [showOptions, setShowOptions] = React.useState(false);
@@ -23,19 +24,13 @@ function Home() {
             <h3 className="text-xl font-bold mb-4">Pilih yang ingin dikerjakan:</h3>
             <ul className="space-y-4">
               <li>
-                <button className="w-full bg-blue-600 hover:bg-blue-700 text-white py-2 rounded transition">Program Linear Min</button>
+                <Link to="/LPmin"><button className="w-full bg-blue-600 hover:bg-blue-700 text-white py-2 rounded transition">Program Linear Min</button></Link>
               </li>
               <li>
-                <button className="w-full bg-blue-600 hover:bg-blue-700 text-white py-2 rounded transition">Program Linear Max</button>
+                <Link to="/LPmax"><button className="w-full bg-blue-600 hover:bg-blue-700 text-white py-2 rounded transition">Program Linear Max</button></Link>
               </li>
               <li>
-                <button className="w-full bg-blue-600 hover:bg-blue-700 text-white py-2 rounded transition">Barat Laut</button>
-              </li>
-              <li>
-                <button className="w-full bg-blue-600 hover:bg-blue-700 text-white py-2 rounded transition">Biaya Terendah</button>
-              </li>
-              <li>
-                <button className="w-full bg-blue-600 hover:bg-blue-700 text-white py-2 rounded transition">Vogel</button>
+                <Link to="/BiayaT"><button className="w-full bg-blue-600 hover:bg-blue-700 text-white py-2 rounded transition">Biaya Transportasi</button></Link>
               </li>
             </ul>
             <button className="mt-6 text-gray-400 hover:text-white text-sm" onClick={() => setShowOptions(false)}>

@@ -65,8 +65,8 @@ function LinearProgrammingmax() {
     });
     allPoints = allPoints.concat(lines.objectiveLine, [solution]);
 
-    const maxX = Math.min(Math.max(...allPoints.map((p) => p.x)) + 2, 20);
-    const maxY = Math.min(Math.max(...allPoints.map((p) => p.y)) + 2, 20);
+    const maxX = Math.ceil(Math.max(...allPoints.map((p) => p.x)) + 1);
+    const maxY = Math.ceil(Math.max(...allPoints.map((p) => p.y)) + 1);
 
     return { maxX, maxY };
   };
