@@ -6,9 +6,9 @@ function Navbar() {
     <header className="flex justify-between items-center px-8 py-5 bg-gradient-to-br from-[#0e1018] via-[#0c1123] to-[#08101f]">
       <a href="/"><h1 className="text-2xl font-bold tracking-tight">Riset Operasi</h1></a>
       <nav className="space-x-6 text-sm font-medium">
-        <Link to="#" className="hover:text-blue-400">Program Linear Min</Link>
-        <a href="#" className="hover:text-blue-400">Program Linear Max</a>
-        <a href="BiayaT" className="hover:text-blue-400">Biaya Transportasi</a>
+        <Link to="LPmin" className="hover:text-blue-400">Program Linear Min</Link>
+        <Link to="LPmax" className="hover:text-blue-400">Program Linear Max</Link>
+        <Link to="BiayaT" className="hover:text-blue-400">Biaya Transportasi</Link>
         
       </nav>
       <div className="space-x-3">

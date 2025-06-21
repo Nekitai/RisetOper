@@ -4,6 +4,8 @@ import Navbar from "./components/Navbar";
 import Footer from "./components/Footer";
 import Home from "./pages/Home";
 import BiayaT from "./pages/BiayaT";
+import LPmin from "./pages/LPmin";
+import LPmax from "./pages/LPmax";
 
 function App() {
   return (
@@ -14,6 +16,8 @@ function App() {
           <Routes>
             <Route path="/" element={<Home />} />
             <Route path="/BiayaT" element={<BiayaT />} />
+            <Route path="/LPmin" element={<LPmin />} />
+            <Route path="/LPmax" element={<LPmax />} />
           </Routes>
         </div>
         <Footer />
