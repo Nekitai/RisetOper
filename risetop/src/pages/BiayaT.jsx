@@ -197,7 +197,7 @@ function BiayaT() {
   };
 
   return (
-    <div className="items-center justify-center flex flex-col p-6 text-white">
+    <div className="items-center justify-center flex flex-col py-36 text-white">
       <h2 className="text-xl font-bold mb-4">Input Data Transportasi</h2>
       <div className="flex gap-4 mb-4">
         <div>

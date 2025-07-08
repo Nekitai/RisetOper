@@ -113,7 +113,7 @@ function LinearProgrammingmax() {
   };
 
   return (
-    <div className="p-6 max-w-3xl mx-auto text-white">
+    <div className="py-36 max-w-3xl mx-auto text-white">
       <h2 className="text-center text-xl font-bold mb-4">Pemrograman Linear - Maximasi</h2>
 
       <div className="mb-6">
