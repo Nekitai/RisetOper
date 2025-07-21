@@ -8,11 +8,7 @@ export default defineConfig({
     tailwindcss(),
     react()],
     build: {
-      outDir: 'dist',
-      
+      outDir: 'dist',     
     },
     base: '',
-    server: {
-      historyApiFallback: true,
-    }
 })

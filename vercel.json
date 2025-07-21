@@ -3,7 +3,10 @@
   "builds": [
     {
       "src": "risetop/package.json",
-      "use": "@vercel/static-build"
+      "use": "@vercel/static-build",
+      "config": {
+        "distDir": "risetop/dist"
+      }
     },
     {
       "src": "logic/app.py",
@@ -25,7 +28,7 @@
     },
     {
       "src": "/(.*)",
-      "dest": "risetop/index.html"
+      "dest": "/risetop/index.html"
     }
   ]
 }
