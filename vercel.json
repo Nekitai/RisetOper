@@ -1,18 +1,28 @@
 {
-  "functions": {
-    "api/*.py": {
-      "runtime": "python3.9"
-    }
-  },
+  "version": 2,
   "builds": [
     {
-      "src": "risetop/package.json",
-      "use": "@vercel/static-build",
-      "config": { "distDir": "risetop/build" }
+      "src": "frontend/package.json",
+      "use": "@vercel/static-build"
+    },
+    {
+      "src": "backend/app.py",
+      "use": "@vercel/python"
     }
   ],
   "routes": [
-    { "src": "/api/(.*)", "dest": "/api/$1.py" },
-    { "src": "/(.*)", "dest": "/risetop/build/$1" }
+    {
+      "src": "/(vogel|biayaterendah|barat_laut|runall|optimize|lp_max|lp_min)",
+      "methods": ["POST"],
+      "dest": "logic/app.py"
+    },
+    {
+      "src": "/api/.*",
+      "dest": "logic/app.py"
+    },
+    {
+      "src": "/(.*)",
+      "dest": "frontend/$1"
+    }
   ]
 }
