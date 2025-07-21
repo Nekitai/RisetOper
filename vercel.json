@@ -14,15 +14,18 @@
     {
       "src": "/(vogel|biayaterendah|barat_laut|runall|optimize|lp_max|lp_min)",
       "methods": ["POST"],
-      "dest": "logic/app.py"
+      "dest": "backend/app.py"
     },
     {
       "src": "/api/.*",
-      "dest": "logic/app.py"
+      "dest": "backend/app.py"
+    },
+    {
+      "handle": "filesystem"
     },
     {
       "src": "/(.*)",
-      "dest": "risetop/$1"
+      "dest": "risetop/index.html"
     }
   ]
 }
