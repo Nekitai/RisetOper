@@ -21,8 +21,11 @@
       "dest": "logic/app.py"
     },
     {
+      "handle": "filesystem"
+    },
+    {
       "src": "/(.*)",
-      "dest": "risetop/$1"
+      "dest": "/risetop/index.html"
     }
   ]
 }
