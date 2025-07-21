@@ -6,7 +6,7 @@
       "use": "@vercel/static-build"
     },
     {
-      "src": "backend/app.py",
+      "src": "logic/app.py",
       "use": "@vercel/python"
     }
   ],
@@ -14,11 +14,11 @@
     {
       "src": "/(vogel|biayaterendah|barat_laut|runall|optimize|lp_max|lp_min)",
       "methods": ["POST"],
-      "dest": "backend/app.py"
+      "dest": "logic/app.py"
     },
     {
       "src": "/api/.*",
-      "dest": "backend/app.py"
+      "dest": "logic/app.py"
     },
     {
       "handle": "filesystem"
