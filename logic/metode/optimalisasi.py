@@ -8,8 +8,26 @@ def cek_optimalitas(allocation, cost_matrix):
     # Step 1: Buat list posisi sel yang terisi (alokasi > 0)
     filled = [(i, j) for i in range(m) for j in range(n) if allocation[i][j] > 0]
 
-    # Step 2: Set u[0] = 0 dan hitung u[i] dan v[j] berdasarkan persamaan: u[i] + v[j] = C[i][j]
-    u[0] = 0  # Inisialisasi salah satu nilai u (biasanya u[0]) dengan 0
+    # Step 2: cari alokasi terbanyak
+    row_counts = [0] * m  # Hitung jumlah alokasi per baris
+    col_counts = [0] * n  # Hitung jumlah alokasi per kolom
+
+    for i, j in filled:
+        row_counts[i] += allocation[i][j]
+        col_counts[j] += allocation[i][j]
+
+    # Temukan baris dengan alokasi terbanyak
+    max_row = max(row_counts)
+    # Temukan kolom dengan alokasi terbanyak
+    max_col = max(col_counts)
+
+    if max_row >= max_col:
+        idx = row_counts.index(max_row)  # Ambil indeks baris dengan alokasi terbanyak
+        u[idx] = 0
+    else:
+        idx = col_counts.index(max_col)  # Ambil indeks kolom dengan alokasi terbanyak
+        v[idx] = 0
+
     while True:
         updated = False
         for i, j in filled:

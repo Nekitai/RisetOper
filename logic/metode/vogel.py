@@ -16,6 +16,8 @@ def vogel_approximation_method(cost_matrix, supply, demand):
     # Set untuk melacak baris dan kolom yang sudah habis (supply/demand = 0)
     done_rows = set()
     done_cols = set()
+    step = []
+    iteration = 1
 
     # Loop sampai semua baris dan kolom selesai (supply dan demand = 0)
     while len(done_rows) < m or len(done_cols) < n:
@@ -26,10 +28,8 @@ def vogel_approximation_method(cost_matrix, supply, demand):
             if i in done_rows:
                 row_penalty.append((-1, -1))  # Skip baris yang sudah selesai
                 continue
-            # Ambil semua elemen biaya di baris yang belum digunakan
             row = [(costs[i][j], j) for j in range(n) if j not in done_cols]
-            row.sort()  # Urutkan berdasarkan biaya terkecil
-            # Hitung selisih dua biaya terkecil sebagai penalty
+            row.sort()
             penalty = row[1][0] - row[0][0] if len(row) > 1 else row[0][0]
             row_penalty.append((penalty, i))
 
@@ -39,45 +39,60 @@ def vogel_approximation_method(cost_matrix, supply, demand):
             if j in done_cols:
                 col_penalty.append((-1, -1))  # Skip kolom yang sudah selesai
                 continue
-            # Ambil semua elemen biaya di kolom yang belum digunakan
             col = [(costs[i][j], i) for i in range(m) if i not in done_rows]
             col.sort()
-            # Hitung selisih dua biaya terkecil sebagai penalty
             penalty = col[1][0] - col[0][0] if len(col) > 1 else col[0][0]
             col_penalty.append((penalty, j))
 
         # Step 3: Pilih penalty terbesar dari baris atau kolom
-        max_row_penalty = max(row_penalty)  # (penalty, indeks_baris)
-        max_col_penalty = max(col_penalty)  # (penalty, indeks_kolom)
+        max_row_penalty = max(row_penalty)
+        max_col_penalty = max(col_penalty)
 
-        # Jika sama besar atau baris lebih besar, prioritaskan baris
         if max_row_penalty[0] >= max_col_penalty[0]:
             i = max_row_penalty[1]
-            # Ambil posisi dengan biaya terkecil di baris tersebut
             row = [(costs[i][j], j) for j in range(n) if j not in done_cols]
             row.sort()
-            j = row[0][1]  # Pilih kolom dengan biaya terkecil
+            j = row[0][1]
         else:
             j = max_col_penalty[1]
-            # Ambil posisi dengan biaya terkecil di kolom tersebut
             col = [(costs[i][j], i) for i in range(m) if i not in done_rows]
             col.sort()
-            i = col[0][1]  # Pilih baris dengan biaya terkecil
+            i = col[0][1]
 
-        # Step 4: Lakukan alokasi ke posisi (i, j)
-        alloc = min(supply[i], demand[j])  # Alokasi maksimum yang bisa dilakukan
+        # Step 4: Alokasi
+        alloc = min(supply[i], demand[j])
         allocation[i][j] = alloc
         supply[i] -= alloc
         demand[j] -= alloc
 
-        # Tandai baris atau kolom selesai jika supply atau demand sudah habis
         if supply[i] == 0:
             done_rows.add(i)
         if demand[j] == 0:
             done_cols.add(j)
 
-    # Kembalikan hasil akhir berupa matriks alokasi dan total biaya
+        pinalty_format_row = [p if p[0] != -1 else "-" for p in row_penalty]
+        pinalty_format_col = [p if p[0] != -1 else "-" for p in col_penalty]
+
+        step.append({
+            "iteration": iteration,
+            "supply": supply[:],
+            "demand": demand[:],
+            "cost_matrix": copy.deepcopy(costs),
+            "row_penalty": [p[0] if p[0] != -1 else "-" for p in pinalty_format_row],
+            "col_penalty": [p[0] if p[0] != -1 else "-" for p in pinalty_format_col],
+            "selected": {"row": i, "col": j},
+            "allocated": alloc
+        })
+        iteration += 1
+
+    row_pinalty_all = [step["row_penalty"] for step in step]
+    col_pinalty_all = [step["col_penalty"] for step in step]
+    
+
     return {
         "allocation": allocation,
-        "total_cost": hitung_total_biaya(allocation, cost_matrix)
+        "total_cost": hitung_total_biaya(allocation, cost_matrix),
+        "steps": step,
+        "row_penalty": row_pinalty_all,
+        "col_penalty": col_pinalty_all
     }

@@ -7,9 +7,15 @@ from metode.baratlaut import barat_laut
 from metode.lp_max import solve_max
 from metode.lp_min import solve_min
 from metode.hitung_biaya import hitung_total_biaya
+import os
 
 app = Flask(__name__)
-CORS(app)
+# Konfigurasi CORS: Opsi 2 (Direkomendasikan untuk Produksi)
+# Menggunakan Environment Variable 'ALLOWED_ORIGINS'
+ALLOWED_ORIGINS_STR = os.environ.get("ALLOWED_ORIGINS", "").split(',')
+ALLOWED_ORIGINS = [origin.strip() for origin in ALLOWED_ORIGINS_STR if origin.strip()]
+
+CORS(app, resources={r"/*": {"origins": ALLOWED_ORIGINS, "methods": ["GET", "POST", "PUT", "DELETE", "OPTIONS"], "allow_headers": ["Content-Type"]}})
 
 @app.route('/vogel', methods=['POST'])
 def solve_vogel():
@@ -105,6 +111,8 @@ def run_all_methods():
         "vogel": {
             "allocation": vogel_alloc,
             "total_cost": vogel_cost,
+            "row_penalty": vogel_result["row_penalty"],
+            "col_penalty": vogel_result["col_penalty"],
             **vogel_opt
         }
     })

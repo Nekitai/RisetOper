@@ -78,7 +78,7 @@ function LinearProgrammingInput() {
     };
 
     try {
-      const res = await fetch("http://localhost:5000/lp_min", {
+      const res = await fetch("/lp_min", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(payload),
@@ -113,89 +113,192 @@ function LinearProgrammingInput() {
   };
 
   return (
-    <div className="py-36 max-w-3xl mx-auto text-white">
-      <h2 className="text-center text-xl font-bold mb-4">Pemrograman Linear - Minimasi</h2>
+    <div className="py-4 sm:py-8 md:py-16 lg:py-36 px-4 sm:px-6 lg:px-8 max-w-4xl mx-auto text-white min-h-screen">
+      <h2 className="text-center text-xl sm:text-2xl lg:text-3xl font-bold mb-6 sm:mb-8">
+        Pemrograman Linear - Minimasi
+      </h2>
 
-      <div className="mb-6">
-        <h3 className="text-lg font-semibold mb-2">Fungsi Tujuan (Min)</h3>
-        <div className="flex gap-2 flex-wrap">
+      {/* Objective Function Section */}
+      <div className="mb-6 sm:mb-8 bg-gray-800/50 p-4 sm:p-6 rounded-lg">
+        <h3 className="text-lg sm:text-xl font-semibold mb-4">Fungsi Tujuan (Min)</h3>
+        
+        {/* Mobile-first grid layout for coefficients */}
+        <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-2 sm:gap-3 mb-4">
           {coefficients.map((val, i) => (
-            <input key={i} type="number" value={val} onChange={(e) => handleCoefficientChange(i, e.target.value)} className="w-20 px-2 py-1 bg-gray-800 text-white rounded" placeholder={`x${i + 1}`} />
+            <div key={i} className="flex flex-col">
+              <label className="text-xs sm:text-sm text-gray-400 mb-1">x{i + 1}</label>
+              <input
+                type="number"
+                value={val}
+                onChange={(e) => handleCoefficientChange(i, e.target.value)}
+                className="w-full px-2 sm:px-3 py-2 sm:py-2.5 bg-gray-700 text-white rounded-md text-sm sm:text-base focus:ring-2 focus:ring-blue-500 focus:outline-none"
+                placeholder="0"
+              />
+            </div>
           ))}
-          <button onClick={addVariable} className="px-3 py-1 bg-blue-600 rounded">
+        </div>
+
+        {/* Button group */}
+        <div className="flex flex-col sm:flex-row gap-2 sm:gap-3">
+          <button
+            onClick={addVariable}
+            className="flex-1 sm:flex-none px-4 py-2 bg-blue-600 hover:bg-blue-700 rounded-md transition-colors text-sm sm:text-base font-medium"
+          >
             + Variabel
           </button>
           {coefficients.length > 1 && (
-            <button onClick={removeVariable} className="px-3 py-1 bg-red-600 rounded">
+            <button
+              onClick={removeVariable}
+              className="flex-1 sm:flex-none px-4 py-2 bg-red-600 hover:bg-red-700 rounded-md transition-colors text-sm sm:text-base font-medium"
+            >
               - Variabel
             </button>
           )}
         </div>
       </div>
 
-      <div className="mb-6">
-        <h3 className="text-lg font-semibold mb-2">Kendala</h3>
-        {constraints.map((cons, i) => (
-          <div key={i} className="flex gap-2 mb-2 flex-wrap items-center">
-            {cons.coefficients.map((val, j) => (
-              <input key={j} type="number" value={val} onChange={(e) => handleConstraintChange(i, "coefficients", j, e.target.value)} className="w-20 px-2 py-1 bg-gray-800 text-white rounded" placeholder={`x${j + 1}`} />
-            ))}
-            <select value={cons.sign} onChange={(e) => handleConstraintChange(i, "sign", null, e.target.value)} className="px-2 py-1 bg-gray-700 rounded">
-              <option value="<=">&#8804;</option>
-              <option value=">=">&#8805;</option>
-              <option value="=">=</option>
-            </select>
-            <input type="number" value={cons.rhs} onChange={(e) => handleConstraintChange(i, "rhs", null, e.target.value)} className="w-24 px-2 py-1 bg-gray-800 text-white rounded" placeholder="b" />
-          </div>
-        ))}
-        <button onClick={addConstraint} className="px-3 py-1 bg-blue-600 rounded mt-2">
-          + Kendala
-        </button>
-        {constraints.length > 1 && (
-          <button onClick={() => removeConstraint(constraints.length - 1)} className="px-3 py-1 bg-red-600 rounded mt-2 ml-2">
-            - Kendala
-          </button>
-        )}
-      </div>
-      {/* buatkan catatan untuk jika nilai x saja itu 1 dan jika tidak ada maka bernilai 0 */}
-      <p className="text-sm text-gray-400 mb-4">Catatan: Jika nilai x saja itu 1 dan jika tidak ada maka bernilai 0</p>
-      <p className="text-sm text-gray-400 mb-4">
-        Contoh: Untuk kendala 2x1 + 3x2 <span>&#8804;</span>= 5, masukkan 2 pada x1, 3 pada x2, dan 5 pada b.
-      </p>
-      <p className="text-sm text-gray-400 mb-4">Contoh: Untuk fungsi tujuan 3x1 + 4x2, masukkan 3 pada x1 dan 4 pada x2.</p>
-      <p className="text-sm text-gray-400 mb-4">
-        Contoh: Untuk fungsi kendala x1 <span>&#8804;</span>= 2, masukkan 1 pada x1 dan 2 pada b. dan begitu juga untuk x2
-      </p>
-      <p className="text-sm text-gray-400 mb-4">Pastikan semua nilai diisi dengan benar sebelum menghitung solusi.</p>
-      <button onClick={handleSubmit} className="px-6 py-2 bg-green-600 rounded">
-        Hitung Solusi
-      </button>
+      {/* Constraints Section */}
+      <div className="mb-6 sm:mb-8 bg-gray-800/50 p-4 sm:p-6 rounded-lg">
+        <h3 className="text-lg sm:text-xl font-semibold mb-4">Kendala</h3>
+        
+        <div className="space-y-4">
+          {constraints.map((cons, i) => (
+            <div key={i} className="border border-gray-700 p-3 sm:p-4 rounded-md bg-gray-900/50">
+              <div className="text-sm text-gray-400 mb-2">Kendala {i + 1}</div>
+              
+              {/* Mobile constraint layout */}
+              <div className="space-y-3">
+                {/* Coefficients row */}
+                <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-2">
+                  {cons.coefficients.map((val, j) => (
+                    <div key={j} className="flex flex-col">
+                      <label className="text-xs text-gray-400 mb-1">x{j + 1}</label>
+                      <input
+                        type="number"
+                        value={val}
+                        onChange={(e) => handleConstraintChange(i, "coefficients", j, e.target.value)}
+                        className="w-full px-2 py-2 bg-gray-700 text-white rounded text-sm focus:ring-2 focus:ring-blue-500 focus:outline-none"
+                        placeholder="0"
+                      />
+                    </div>
+                  ))}
+                </div>
 
+                {/* Sign and RHS row */}
+                <div className="flex gap-2 items-end">
+                  <div className="flex flex-col flex-1">
+                    <label className="text-xs text-gray-400 mb-1">Tanda</label>
+                    <select
+                      value={cons.sign}
+                      onChange={(e) => handleConstraintChange(i, "sign", null, e.target.value)}
+                      className="w-full px-2 py-2 bg-gray-700 text-white rounded text-sm focus:ring-2 focus:ring-blue-500 focus:outline-none"
+                    >
+                      <option value="<=">≤</option>
+                      <option value=">=">≥</option>
+                      <option value="=">=</option>
+                    </select>
+                  </div>
+                  
+                  <div className="flex flex-col flex-1">
+                    <label className="text-xs text-gray-400 mb-1">Nilai</label>
+                    <input
+                      type="number"
+                      value={cons.rhs}
+                      onChange={(e) => handleConstraintChange(i, "rhs", null, e.target.value)}
+                      className="w-full px-2 py-2 bg-gray-700 text-white rounded text-sm focus:ring-2 focus:ring-blue-500 focus:outline-none"
+                      placeholder="0"
+                    />
+                  </div>
+
+                  {/* Remove constraint button for individual constraints */}
+                  {constraints.length > 1 && (
+                    <button
+                      onClick={() => removeConstraint(i)}
+                      className="px-3 py-2 bg-red-600 hover:bg-red-700 rounded text-sm transition-colors"
+                      title="Hapus kendala"
+                    >
+                      ×
+                    </button>
+                  )}
+                </div>
+              </div>
+            </div>
+          ))}
+        </div>
+
+        {/* Add constraint button */}
+        <button
+          onClick={addConstraint}
+          className="w-full sm:w-auto mt-4 px-4 py-2 bg-blue-600 hover:bg-blue-700 rounded-md transition-colors text-sm sm:text-base font-medium"
+        >
+          + Kendala Baru
+        </button>
+      </div>
+
+      {/* Instructions Section */}
+      <div className="mb-6 sm:mb-8 bg-gray-800/30 p-4 sm:p-6 rounded-lg">
+        <h4 className="text-base sm:text-lg font-semibold mb-3 text-yellow-400">Petunjuk Penggunaan:</h4>
+        <div className="space-y-2 text-xs sm:text-sm text-gray-300">
+          <p>• Jika nilai x saja itu 1 dan jika tidak ada maka bernilai 0</p>
+          <p>• Contoh: Untuk kendala 2x₁ + 3x₂ ≤ 5, masukkan 2 pada x₁, 3 pada x₂, dan 5 pada nilai</p>
+          <p>• Contoh: Untuk fungsi tujuan 3x₁ + 4x₂, masukkan 3 pada x₁ dan 4 pada x₂</p>
+          <p>• Contoh: Untuk kendala x₁ ≤ 2, masukkan 1 pada x₁ dan 2 pada nilai</p>
+          <p>• Pastikan semua nilai diisi dengan benar sebelum menghitung solusi</p>
+        </div>
+      </div>
+
+      {/* Calculate Button */}
+      <div className="mb-6 sm:mb-8">
+        <button
+          onClick={handleSubmit}
+          className="w-full sm:w-auto px-8 py-3 bg-green-600 hover:bg-green-700 rounded-lg transition-colors text-base sm:text-lg font-semibold shadow-lg"
+        >
+          Hitung Solusi
+        </button>
+      </div>
+
+      {/* Results Section */}
       {result && (
-        <div className="mt-6">
-          <h3 className="text-lg font-semibold mb-2">Hasil:</h3>
+        <div className="mb-6 sm:mb-8 bg-gray-800/50 p-4 sm:p-6 rounded-lg">
+          <h3 className="text-lg sm:text-xl font-semibold mb-4">Hasil:</h3>
           {result.success ? (
-            <>
-              <p className="mb-1">
-                Nilai Minimum: <span className="text-green-400 font-bold">{result.optimal_value}</span>
+            <div className="space-y-3">
+              <p className="text-base sm:text-lg">
+                Nilai Minimum: <span className="text-green-400 font-bold text-xl">{result.optimal_value}</span>
               </p>
-              <ul className="list-disc pl-6">
-                {result.solution.map((val, i) => (
-                  <li key={i}>
-                    x{i + 1} = {val.toFixed(2)}
-                  </li>
-                ))}
-              </ul>
-            </>
+              <div className="bg-gray-900/50 p-3 sm:p-4 rounded-md">
+                <h4 className="text-sm sm:text-base font-semibold mb-2 text-gray-300">Solusi Optimal:</h4>
+                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-2">
+                  {result.solution.map((val, i) => (
+                    <div key={i} className="bg-gray-800 p-2 sm:p-3 rounded text-center">
+                      <span className="text-gray-400 text-sm">x{i + 1} =</span>
+                      <span className="text-white font-bold ml-2">{val.toFixed(2)}</span>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            </div>
           ) : (
-            <p className="text-red-400">{result.message}</p>
+            <div className="bg-red-900/30 border border-red-600 p-4 rounded-md">
+              <p className="text-red-300 text-sm sm:text-base">{result.message}</p>
+            </div>
           )}
         </div>
       )}
+
+      {/* Graph Section */}
       {graphData && (
-        <div className="mt-6">
-          <h3 className="text-lg font-semibold mb-2">Visualisasi Grafik:</h3>
-          <LPGraph constraints={graphData.constraintLines} objectiveLine={graphData.objectiveLine} solutionPoint={graphData.solutionPoint} xMax={graphData.maxX} yMax={graphData.maxY} />
+        <div className="bg-gray-800/50 p-4 sm:p-6 rounded-lg">
+          <h3 className="text-lg sm:text-xl font-semibold mb-4">Visualisasi Grafik:</h3>
+          <div className="overflow-x-auto">
+            <LPGraph
+              constraints={graphData.constraintLines}
+              objectiveLine={graphData.objectiveLine}
+              solutionPoint={graphData.solutionPoint}
+              xMax={graphData.maxX}
+              yMax={graphData.maxY}
+            />
+          </div>
         </div>
       )}
     </div>

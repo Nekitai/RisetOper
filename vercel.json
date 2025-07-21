@@ -1,0 +1,29 @@
+{
+  "version": 2,
+  "builds": [
+    {
+      "src": "fuzzy/package.json",
+      "use": "@vercel/static-build"
+    },
+    {
+      "src": "logic/wsgi.py",
+      "use": "@vercel/python"
+    }
+  ],
+  "routes": [
+    {
+      "src": "/fuzzy",
+      "methods": ["POST"],
+      "dest": "logic/wsgi.py"
+    },
+    {
+      "src": "/reset",
+      "methods": ["POST"],
+      "dest": "logic/wsgi.py"
+    },
+    {
+      "src": "/(.*)",
+      "dest": "fuzzy/$1"
+    }
+  ]
+}
