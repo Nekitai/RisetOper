@@ -2,11 +2,11 @@
   "version": 2,
   "builds": [
     {
-      "src": "risetop/package.json",
+      "src": "frontend/package.json",
       "use": "@vercel/static-build"
     },
     {
-      "src": "logic/app.py",
+      "src": "backend/app.py",
       "use": "@vercel/python"
     }
   ],
@@ -21,11 +21,8 @@
       "dest": "logic/app.py"
     },
     {
-      "handle": "filesystem"
-    },
-    {
       "src": "/(.*)",
-      "dest": "/index.html"
+      "dest": "frontend/$1"
     }
   ]
 }
