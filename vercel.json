@@ -25,7 +25,7 @@
     },
     {
       "src": "/(.*)",
-      "dest": "/risetop/index.html"
+      "dest": "/risetop/dist/index.html"
     }
   ]
 }
