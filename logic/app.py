@@ -7,8 +7,8 @@ from metode.vogel import vogel_approximation_method
 from metode.optimalisasi import cek_optimalitas
 from metode.biayaterendah import biaya_terendah
 from metode.baratlaut import barat_laut 
-from metode.lp_max import solve_max
-from metode.lp_min import solve_min
+# from metode.lp_max import solve_max
+# from metode.lp_min import solve_min
 from metode.hitung_biaya import hitung_total_biaya
 
 app = Flask(__name__)
@@ -135,15 +135,15 @@ def optimize_solution():
     return jsonify(result)
 
 # endpoint lp_max
-@app.route('/lp_max', methods=['POST'])
-def solve_lp_max():
-    data = request.get_json()
-    result = solve_max(data)
-    return jsonify(result)
+# @app.route('/lp_max', methods=['POST'])
+# def solve_lp_max():
+#     data = request.get_json()
+#     result = solve_max(data)
+#     return jsonify(result)
 
-@app.route('/lp_min', methods=['POST'])
-def solve_lp_mix():
-    data = request.get_json()
-    result = solve_min(data)
-    return jsonify(result)
+# @app.route('/lp_min', methods=['POST'])
+# def solve_lp_mix():
+#     data = request.get_json()
+#     result = solve_min(data)
+#     return jsonify(result)
 

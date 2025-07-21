@@ -13,7 +13,7 @@
   ],
   "routes": [
     {
-      "src": "/(vogel|biayaterendah|barat_laut|runall|optimize|lp_max|lp_min)",
+      "src": "/(vogel|biayaterendah|barat_laut|runall|optimize)",
       "methods": ["POST"],
       "dest": "logic/app.py"
     },
@@ -26,10 +26,9 @@
       "dest": "risetop/index.html"
     },
     {
-      "src": "/[^/.]+", 
+      "src": "/[^/.]+",
       "dest": "risetop/index.html"
     },
-
     {
       "src": "/(.*)",
       "dest": "risetop/$1"
