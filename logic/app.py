@@ -1,3 +1,6 @@
+import sys
+import os
+sys.path.append(os.path.dirname(os.path.abspath(__file__)))
 from flask import Flask, request, jsonify
 from flask_cors import CORS
 from metode.vogel import vogel_approximation_method
@@ -7,7 +10,6 @@ from metode.baratlaut import barat_laut
 from metode.lp_max import solve_max
 from metode.lp_min import solve_min
 from metode.hitung_biaya import hitung_total_biaya
-import os
 
 app = Flask(__name__)
 # Konfigurasi CORS: Opsi 2 (Direkomendasikan untuk Produksi)
