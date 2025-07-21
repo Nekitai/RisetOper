@@ -25,7 +25,12 @@
     },
     {
       "src": "/(.*)",
-      "dest": "/risetop/dist/index.html"
+      "dest": "/index.html"
     }
-  ]
+  ],
+  "frontend": {
+    "dir": "risetop",
+    "buildCommand": "npm run build",
+    "outputDir": "dist"
+  }
 }
