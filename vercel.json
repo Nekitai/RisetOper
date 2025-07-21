@@ -1,29 +1,18 @@
 {
-  "version": 2,
+  "functions": {
+    "api/*.py": {
+      "runtime": "python3.9"
+    }
+  },
   "builds": [
     {
-      "src": "fuzzy/package.json",
-      "use": "@vercel/static-build"
-    },
-    {
-      "src": "logic/wsgi.py",
-      "use": "@vercel/python"
+      "src": "risetop/package.json",
+      "use": "@vercel/static-build",
+      "config": { "distDir": "risetop/build" }
     }
   ],
   "routes": [
-    {
-      "src": "/fuzzy",
-      "methods": ["POST"],
-      "dest": "logic/wsgi.py"
-    },
-    {
-      "src": "/reset",
-      "methods": ["POST"],
-      "dest": "logic/wsgi.py"
-    },
-    {
-      "src": "/(.*)",
-      "dest": "fuzzy/$1"
-    }
+    { "src": "/api/(.*)", "dest": "/api/$1.py" },
+    { "src": "/(.*)", "dest": "/risetop/build/$1" }
   ]
 }
